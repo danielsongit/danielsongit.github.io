@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Daniel Morales | Projects</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+  --bg: #f7f8f5;
+  --panel: #ffffff;
+  --ink: #171a1c;
+  --muted: #667076;
+  --line: #d8ded5;
+  --green: #1d5f52;
+  --steel: #44546a;
+  --shadow: 0 18px 45px rgba(24, 33, 38, 0.09);
+}
+body {
+  min-height: 100vh;
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: linear-gradient(90deg, rgba(216,222,213,0.45) 1px, transparent 1px), linear-gradient(rgba(216,222,213,0.42) 1px, transparent 1px), var(--bg);
+  background-size: 44px 44px;
+  color: var(--ink);
+  line-height: 1.6;
+}
+nav {
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 5vw;
+  background: rgba(247, 248, 245, 0.9);
+  border-bottom: 1px solid var(--line);
+  backdrop-filter: blur(14px);
+}
+nav a { color: var(--ink); font-weight: 800; text-decoration: none; }
+.nav-name span { color: var(--green); }
+.nav-links { display: flex; gap: 1.25rem; list-style: none; }
+.nav-links a { color: var(--muted); font-size: 0.82rem; font-weight: 700; }
+.nav-links a:hover { color: var(--ink); }
+.wrap { width: min(1120px, calc(100% - 40px)); margin: 0 auto; padding: 3.5rem 0 5rem; }
+.eyebrow { color: var(--green); font-size: 0.78rem; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 0.75rem; }
+h1 { font-size: clamp(2.35rem, 4.5vw, 4.4rem); line-height: 1; margin-bottom: 1rem; }
+.intro { color: var(--steel); max-width: 720px; margin-bottom: 2rem; }
+.project-grid {
+  --rail-column: 96px;
+  --rail-node: 42px;
+  --rail-node-offset: 27px;
+  --rail-gap: 1.5rem;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) var(--rail-column) minmax(0, 1fr);
+  gap: 2.2rem 1.5rem;
+  max-width: 1040px;
+  margin-top: 2rem;
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+  counter-reset: project-step 5;
+}
+
+.project-grid::before {
+  content: "";
+  position: absolute;
+  top: -1.55rem;
+  bottom: 0.1rem;
+  left: 50%;
+  width: 6px;
+  background:
+    linear-gradient(var(--green), var(--green)) center / 2px 100% no-repeat,
+    linear-gradient(#d5dbd2, #d5dbd2);
+  transform: translateX(-50%);
+  border-radius: 999px;
+  box-shadow: 0 0 0 1px rgba(255,255,255,0.82), 0 14px 30px rgba(29,95,82,0.12);
+}
+
+.project-grid::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: -2.1rem;
+  width: 14px;
+  height: 14px;
+  background: var(--line);
+  border: 3px solid var(--bg);
+  border-radius: 50%;
+  transform: translateX(-50%);
+  box-shadow: 0 0 0 1px #c8d0c6;
+}
+
+.project {
+  counter-increment: project-step -1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  min-height: 235px;
+  padding: 1.1rem;
+  background: var(--project-image, linear-gradient(135deg, #d8ded5, #f8faf7));
+  background-size: cover;
+  background-position: center;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  color: inherit;
+  text-decoration: none;
+  position: relative;
+  overflow: visible;
+  isolation: isolate;
+  transition: transform 0.16s ease, box-shadow 0.16s ease, border-color 0.16s ease;
+}
+
+.project:nth-child(odd) {
+  grid-column: 1;
+}
+
+.project:nth-child(even) {
+  grid-column: 3;
+}
+
+.project:nth-child(1) { grid-row: 1; }
+.project:nth-child(2) { grid-row: 2; }
+.project:nth-child(3) { grid-row: 3; }
+.project:nth-child(4) { grid-row: 4; }
+.project:nth-child(5) { grid-row: 5; }
+
+.project:hover, .project:focus-visible { transform: translateY(-3px); box-shadow: var(--shadow); border-color: rgba(29,95,82,0.35); outline: none; }
+.project::before { content: ""; position: absolute; inset: 0; z-index: -1; border-radius: inherit; background: linear-gradient(180deg, rgba(23,26,28,0.08), rgba(23,26,28,0.76)); transition: background 0.16s ease; }
+.project::after { content: "View Project \2197"; position: absolute; inset: 0; display: grid; place-items: center; border-radius: inherit; background: rgba(23,26,28,0.68); color: #fff; font-size: 0.92rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0; transition: opacity 0.16s ease; }
+.project:hover::after, .project:focus-visible::after { opacity: 1; }
+.project .label::before {
+  content: counter(project-step);
+  position: absolute;
+  left: calc(100% + var(--rail-gap) + var(--rail-node-offset));
+  top: 0.72rem;
+  width: var(--rail-node);
+  height: var(--rail-node);
+  display: grid;
+  place-items: center;
+  border: 5px solid #d7ded5;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle, var(--green) 0 43%, transparent 44%),
+    var(--bg);
+  box-shadow: 0 0 0 3px rgba(255,255,255,0.95), 0 12px 24px rgba(29,95,82,0.22);
+  color: #fff;
+  font-size: 0.78rem;
+  font-weight: 900;
+  line-height: 1;
+  text-shadow: none;
+}
+
+.project .label::after {
+  content: "";
+  position: absolute;
+  left: calc(100% + 0.45rem);
+  top: 1.85rem;
+  width: calc(var(--rail-gap) + var(--rail-node-offset) - 0.45rem);
+  height: 2px;
+  background: var(--green);
+  box-shadow: 0 1px 0 rgba(255,255,255,0.8);
+}
+
+.project:nth-child(even) .label::before {
+  left: auto;
+  right: calc(100% + var(--rail-gap) + var(--rail-node-offset));
+}
+
+.project:nth-child(even) .label::after {
+  left: auto;
+  right: calc(100% + 0.45rem);
+}
+.label { color: rgba(255,255,255,0.78); font-size: 0.72rem; font-weight: 800; text-transform: uppercase; margin-bottom: 0.55rem; text-shadow: 0 2px 12px rgba(0,0,0,0.35); }
+h2 { color: #fff; font-size: 1.06rem; line-height: 1.25; margin-bottom: 0.45rem; text-shadow: 0 2px 12px rgba(0,0,0,0.45); }
+.project p { color: rgba(255,255,255,0.86); font-size: 0.88rem; margin-bottom: 0.7rem; text-shadow: 0 2px 12px rgba(0,0,0,0.35); }
+.tags { display: flex; flex-wrap: wrap; gap: 0.35rem; margin: 0.75rem 0 0.85rem; }
+.tag { border: 1px solid rgba(255,255,255,0.32); border-radius: 999px; padding: 0.24rem 0.55rem; background: rgba(255,255,255,0.16); color: #fff; font-size: 0.72rem; font-weight: 700; backdrop-filter: blur(6px); }
+.metric-list { display: grid; gap: 0.3rem; margin-top: auto; }
+.metric-list li { list-style: none; padding-left: 1rem; position: relative; color: rgba(255,255,255,0.84); font-size: 0.82rem; text-shadow: 0 2px 12px rgba(0,0,0,0.35); }
+.metric-list li::before { content: ""; position: absolute; left: 0; top: 0.68em; width: 5px; height: 5px; background: var(--green); border-radius: 50%; }
+.other-projects {
+  max-width: 1040px;
+  margin: 2.5rem auto 0;
+}
+.other-projects .section-label {
+  color: var(--muted);
+  font-size: 0.72rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  margin-bottom: 0.75rem;
+}
+.other-project-card {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 1.2rem;
+  align-items: center;
+  min-height: 150px;
+  padding: 1.2rem;
+  border: 1px solid var(--line);
+  background: rgba(255,254,248,0.92);
+  color: var(--ink);
+  text-decoration: none;
+}
+.other-project-card h2 {
+  color: var(--ink);
+  text-shadow: none;
+}
+.other-project-card p {
+  color: var(--steel);
+  max-width: 700px;
+  margin: 0;
+  text-shadow: none;
+}
+.other-project-card::after {
+  content: "Open";
+  display: grid;
+  place-items: center;
+  min-width: 86px;
+  min-height: 38px;
+  border: 1px solid var(--ink);
+  background: var(--ink);
+  color: #fff;
+  font-size: 0.82rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+.other-project-card:hover,
+.other-project-card:focus-visible {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow);
+  outline: none;
+}
+@media (max-width: 720px) {
+  nav { padding: 0 20px; }
+  .nav-links { display: none; }
+  .wrap { width: min(100% - 28px, 1120px); padding: 2.5rem 0 4rem; }
+  .project-grid {
+    --rail-column: 24px;
+    --rail-node: 34px;
+    --rail-node-offset: -5px;
+    --rail-gap: 1rem;
+    grid-template-columns: var(--rail-column) minmax(0, 1fr);
+    gap: 1rem;
+  }
+  .project-grid::before {
+    left: 10px;
+    transform: none;
+  }
+  .project-grid::after {
+    left: 10px;
+    transform: translateX(-50%);
+  }
+  .project,
+  .project:nth-child(odd),
+  .project:nth-child(even) {
+    grid-column: 2;
+    grid-row: auto;
+    min-height: 230px;
+  }
+  .project .label::before,
+  .project:nth-child(even) .label::before {
+    left: calc(-1rem - var(--rail-column) - 7px);
+    right: auto;
+  }
+  .project .label::after,
+  .project:nth-child(even) .label::after {
+    left: calc(-1rem - var(--rail-column) + 10px);
+    width: calc(var(--rail-gap) + var(--rail-column) - 10px);
+    right: auto;
+  }
+  .other-project-card {
+    grid-template-columns: 1fr;
+  }
+  .other-project-card::after {
+    width: fit-content;
+  }
+}
+</style>
+<link rel="stylesheet" href="te-style.css">
+</head>
+<body class="projects-page">
+<nav>
+  <a href="portfolio-clean.html" class="nav-name">Daniel<span>Morales</span></a>
+  <ul class="nav-links">
+    <li><a href="portfolio-clean.html">Home</a></li>
+    <li><a href="resume.html">Resume</a></li>
+    <li><a href="projects.html">Projects</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+</nav>
+
+<main class="wrap">
+  <p class="eyebrow">Projects</p>
+  <h1>Engineering and programming work</h1>
+  <p class="intro">These projects come from my resume and show experience with robotics, CAD, team leadership, programming, rapid prototyping, and engineering computation.</p>
+
+  <div class="project-grid">
+    <a class="project" href="Project pages/poke-miner-rpg.html" style="--project-image: url('PDFS/Poke-miner/Poke-minerRPG_Card_Title.png');">
+      <p class="label">Individual Project | Mar. 2025 - Apr. 2025</p>
+      <h2>Poke-miner RPG</h2>
+      <p>Designed and developed a Java-based RPG using object-oriented programming principles.</p>
+      <div class="tags"><span class="tag">Java</span><span class="tag">OOP</span><span class="tag">Game Logic</span></div>
+      <ul class="metric-list"><li>Implemented arrays of objects, constructors, and class-based game logic.</li><li>Built interactive gameplay involving character progression and battles.</li></ul>
+    </a>
+    <a class="project" href="Project pages/greenhouse-project.html" style="--project-image: url('PDFS/Greenhouse-Project/Greenhouse_Project_CardTitle.jpeg');">
+      <p class="label">Project Manager | Aug. 2023 - May 2024</p>
+      <h2>Greenhouse Project</h2>
+      <p>Led a 5-member team maintaining a solar-powered irrigation system.</p>
+      <div class="tags"><span class="tag">Project Management</span><span class="tag">Solar Power</span><span class="tag">Irrigation</span></div>
+      <ul class="metric-list"><li>Coordinated scheduling, task delegation, and system implementation.</li><li>Improved plant growth efficiency through automated watering schedules.</li></ul>
+    </a>
+    <a class="project" href="Project pages/vex-robotics.html" style="--project-image: url('PDFS/Vex-Robotics/Vex-Robotics_CardTitle.jpg');">
+      <p class="label">Vex Robotics | Aug. 2021 - Feb. 2024</p>
+      <h2>Vex-Robotics Competition: Over Under</h2>
+      <p>Designed and assembled modular robot components using Fusion 360.</p>
+      <div class="tags"><span class="tag">Fusion 360</span><span class="tag">Robot Design</span><span class="tag">Assembly</span></div>
+      <ul class="metric-list"><li>Contributed to iterative design improvements for competition performance.</li><li>Built practical CAD and assembly judgment through hands-on robot work.</li></ul>
+    </a>
+    <a class="project" href="Project pages/bell-advanced-vertical-robotics.html" style="--project-image: url('PDFS/Bell_Advanced_Vertical_Robotics/Bell_Advanced_Vertical_Robotics_CardTitle.jpeg');">
+      <p class="label">Programmer + Assembly Assistant | Aug. 2022 - Dec. 2022</p>
+      <h2>Bell Advanced Vertical Robotics</h2>
+      <p>Calibrated and programmed a quadcopter drone for flight, visual output, and laser output based on computer input.</p>
+      <div class="tags"><span class="tag">Drone</span><span class="tag">Programming</span><span class="tag">3D Printing</span></div>
+      <ul class="metric-list"><li>Applied CAD models and 3D printing to produce functional parts.</li><li>Connected mechanical design with programmed output behavior.</li></ul>
+    </a>
+  </div>
+
+  <section class="other-projects" aria-label="Other projects">
+    <p class="section-label">Not on the timeline</p>
+    <a class="other-project-card" href="Project pages/others.html">
+      <div>
+        <h2>Others</h2>
+        <p>A flexible place for smaller projects, experiments, coursework, prototypes, and additional engineering or programming work.</p>
+      </div>
+    </a>
+  </section>
+</main>
+</body>
+</html>
