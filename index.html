@@ -1,0 +1,876 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Daniel Morales | Mechanical Engineering Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+:root {
+  --bg: #f7f8f5;
+  --panel: #ffffff;
+  --ink: #171a1c;
+  --muted: #667076;
+  --line: #d8ded5;
+  --green: #1d5f52;
+  --steel: #44546a;
+  --amber: #b35c1e;
+  --blue: #1f6d8a;
+  --shadow: 0 18px 45px rgba(24, 33, 38, 0.09);
+  --radius: 8px;
+}
+
+body {
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background:
+    linear-gradient(90deg, rgba(216,222,213,0.45) 1px, transparent 1px),
+    linear-gradient(rgba(216,222,213,0.42) 1px, transparent 1px),
+    var(--bg);
+  background-size: 44px 44px;
+  color: var(--ink);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: inherit; }
+
+nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 20;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 5vw;
+  background: rgba(247, 248, 245, 0.9);
+  border-bottom: 1px solid var(--line);
+  backdrop-filter: blur(14px);
+}
+
+.nav-name {
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.nav-name span { color: var(--green); }
+
+.nav-links {
+  display: flex;
+  gap: 1.25rem;
+  list-style: none;
+}
+
+.nav-links a {
+  color: var(--muted);
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.nav-links a:hover { color: var(--ink); }
+
+.wrap {
+  width: min(1120px, calc(100% - 40px));
+  margin: 0 auto;
+}
+
+.hero {
+  min-height: 92vh;
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(320px, 0.95fr);
+  align-items: center;
+  gap: 4rem;
+  padding-top: 92px;
+  padding-bottom: 4rem;
+}
+
+.eyebrow {
+  color: var(--green);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 1.1rem;
+}
+
+h1 {
+  max-width: 760px;
+  font-size: clamp(2.65rem, 6.2vw, 5.7rem);
+  line-height: 0.96;
+  letter-spacing: 0;
+  margin-bottom: 1.35rem;
+}
+
+.hero-copy {
+  max-width: 650px;
+  color: var(--steel);
+  font-size: clamp(1rem, 1.3vw, 1.18rem);
+  margin-bottom: 2rem;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.85rem;
+  margin-bottom: 2.35rem;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 0 1.1rem;
+  border: 1px solid var(--ink);
+  border-radius: 6px;
+  background: var(--ink);
+  color: #fff;
+  font-size: 0.86rem;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.btn.secondary {
+  background: transparent;
+  color: var(--ink);
+}
+
+.contact-strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem 1.15rem;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.contact-strip a {
+  color: var(--steel);
+  text-decoration: none;
+  font-weight: 700;
+}
+
+.hero-panel {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+.image-placeholder {
+  min-height: 380px;
+  position: relative;
+  display: grid;
+  place-items: center;
+  padding: 2rem;
+  background:
+    linear-gradient(90deg, rgba(216,222,213,0.8) 1px, transparent 1px),
+    linear-gradient(rgba(216,222,213,0.8) 1px, transparent 1px),
+    #fbfcfa;
+  background-size: 24px 24px;
+  color: var(--muted);
+  text-align: center;
+}
+
+.image-placeholder img {
+  width: 100%;
+  height: 100%;
+  min-height: 316px;
+  object-fit: cover;
+  border-radius: 6px;
+  border: 1px solid var(--line);
+  display: block;
+}
+
+.image-placeholder img[src=""] { display: none; }
+.image-placeholder:has(img:not([src=""])) .placeholder-content { display: none; }
+
+.placeholder-content {
+  width: min(100%, 300px);
+  min-height: 220px;
+  border: 2px dashed var(--line);
+  border-radius: 8px;
+  background: rgba(255,255,255,0.78);
+  display: grid;
+  place-items: center;
+  padding: 1.5rem;
+}
+
+.placeholder-content strong {
+  display: block;
+  color: var(--steel);
+  font-size: 1.05rem;
+  margin-bottom: 0.35rem;
+}
+
+.placeholder-content span {
+  display: block;
+  font-size: 0.86rem;
+}
+
+.spec-sheet {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border-top: 1px solid var(--line);
+}
+
+.spec {
+  padding: 1.1rem;
+  border-right: 1px solid var(--line);
+}
+
+.spec:last-child { border-right: 0; }
+
+.spec strong {
+  display: block;
+  font-size: 1.35rem;
+  line-height: 1.1;
+}
+
+.spec span {
+  color: var(--muted);
+  font-size: 0.72rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+section {
+  padding: 5.5rem 0;
+  border-top: 1px solid var(--line);
+}
+
+.section-head {
+  display: grid;
+  grid-template-columns: 0.65fr 1fr;
+  gap: 3rem;
+  align-items: end;
+  margin-bottom: 2rem;
+}
+
+h2 {
+  font-size: clamp(1.8rem, 3vw, 3rem);
+  line-height: 1.05;
+  letter-spacing: 0;
+}
+
+.section-head p {
+  color: var(--muted);
+  max-width: 650px;
+}
+
+.quick-grid,
+.project-grid,
+.skills-grid {
+  display: grid;
+  gap: 1rem;
+}
+
+.quick-grid { grid-template-columns: repeat(4, 1fr); }
+.project-grid { grid-template-columns: repeat(2, 1fr); }
+.skills-grid { grid-template-columns: repeat(3, 1fr); }
+
+.card,
+.project,
+.skill-card {
+  background: rgba(255, 255, 255, 0.86);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+
+.card { padding: 1.2rem; }
+
+.card .label,
+.project .label,
+.skill-card .label {
+  color: var(--muted);
+  font-size: 0.72rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  margin-bottom: 0.55rem;
+}
+
+.project .label {
+  color: rgba(255,255,255,0.78);
+  text-shadow: 0 2px 12px rgba(0,0,0,0.35);
+}
+
+.card strong {
+  display: block;
+  font-size: 1.25rem;
+  line-height: 1.2;
+}
+
+.project {
+  padding: 1.45rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  min-height: 340px;
+  color: inherit;
+  text-decoration: none;
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  background: var(--project-image, linear-gradient(135deg, #d8ded5, #f8faf7));
+  background-size: cover;
+  background-position: center;
+  transition: transform 0.16s ease, box-shadow 0.16s ease, border-color 0.16s ease;
+}
+
+.project:hover,
+.project:focus-visible {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow);
+  border-color: rgba(29, 95, 82, 0.35);
+  outline: none;
+}
+
+.project::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(180deg, rgba(23,26,28,0.08), rgba(23,26,28,0.76));
+  transition: background 0.16s ease;
+}
+
+.project::after {
+  content: "View Project \2197";
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: rgba(23, 26, 28, 0.68);
+  color: #fff;
+  font-size: 0.92rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0;
+  transition: opacity 0.16s ease;
+}
+
+.project:hover::after,
+.project:focus-visible::after {
+  opacity: 1;
+}
+
+.project h3 {
+  font-size: 1.2rem;
+  line-height: 1.25;
+  margin-bottom: 0.65rem;
+  color: #fff;
+  text-shadow: 0 2px 12px rgba(0,0,0,0.45);
+}
+
+.project p {
+  color: rgba(255,255,255,0.86);
+  font-size: 0.94rem;
+  margin-bottom: 1rem;
+  text-shadow: 0 2px 12px rgba(0,0,0,0.35);
+}
+
+.metric-list {
+  display: grid;
+  gap: 0.55rem;
+  margin-top: auto;
+}
+
+.metric-list li {
+  list-style: none;
+  padding-left: 1rem;
+  position: relative;
+  color: rgba(255,255,255,0.84);
+  font-size: 0.9rem;
+  text-shadow: 0 2px 12px rgba(0,0,0,0.35);
+}
+
+.metric-list li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.68em;
+  width: 5px;
+  height: 5px;
+  background: var(--green);
+  border-radius: 50%;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin: 1rem 0 1.2rem;
+}
+
+.tag {
+  border: 1px solid rgba(255,255,255,0.32);
+  border-radius: 999px;
+  padding: 0.24rem 0.55rem;
+  background: rgba(255,255,255,0.16);
+  color: #fff;
+  font-size: 0.72rem;
+  font-weight: 700;
+  backdrop-filter: blur(6px);
+}
+
+.skill-card { padding: 1.2rem; }
+
+.skill-card h3 {
+  font-size: 1rem;
+  margin-bottom: 0.55rem;
+}
+
+.skill-card p {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.timeline { display: grid; gap: 1rem; }
+
+.role {
+  display: grid;
+  grid-template-columns: 210px 1fr;
+  gap: 1.5rem;
+  padding: 1.45rem;
+  background: rgba(255,255,255,0.86);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+
+.role time {
+  color: var(--muted);
+  font-size: 0.85rem;
+  font-weight: 800;
+}
+
+.role h3 {
+  font-size: 1.08rem;
+  margin-bottom: 0.15rem;
+}
+
+.role .company {
+  color: var(--steel);
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+}
+
+.role ul {
+  display: grid;
+  gap: 0.4rem;
+  color: var(--muted);
+  padding-left: 1.1rem;
+}
+
+.about-layout {
+  display: grid;
+  grid-template-columns: 1fr 360px;
+  gap: 2rem;
+  align-items: start;
+}
+
+.about-copy {
+  color: var(--steel);
+  font-size: 1rem;
+}
+
+.about-copy p + p { margin-top: 1rem; }
+
+.credential-box {
+  background: var(--ink);
+  color: #fff;
+  border-radius: var(--radius);
+  padding: 1.35rem;
+}
+
+.credential-box h3 { margin-bottom: 1rem; }
+
+.credential-box dl { display: grid; gap: 0.85rem; }
+
+.credential-box dt {
+  color: rgba(255,255,255,0.68);
+  font-size: 0.72rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.credential-box dd { font-weight: 700; }
+
+#contact { padding-bottom: 6rem; }
+
+.contact-panel {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 2rem;
+  align-items: center;
+  background: var(--green);
+  color: #fff;
+  border-radius: var(--radius);
+  padding: 2rem;
+}
+
+.contact-panel h2 { margin-bottom: 0.55rem; }
+.contact-panel p { color: rgba(255,255,255,0.78); }
+
+.contact-links {
+  display: grid;
+  gap: 0.65rem;
+  min-width: 260px;
+}
+
+.contact-links a {
+  color: #fff;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+footer {
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.2rem 5vw;
+  font-size: 0.85rem;
+}
+
+.fade {
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 0.55s ease, transform 0.55s ease;
+}
+
+.fade.in {
+  opacity: 1;
+  transform: none;
+}
+
+@media (max-width: 900px) {
+  .hero,
+  .section-head,
+  .about-layout,
+  .contact-panel {
+    grid-template-columns: 1fr;
+  }
+
+  .quick-grid,
+  .skills-grid { grid-template-columns: repeat(2, 1fr); }
+  .project-grid { grid-template-columns: 1fr; }
+
+  .hero {
+    min-height: auto;
+    padding-top: 7rem;
+  }
+}
+
+@media (max-width: 640px) {
+  nav { padding: 0 20px; }
+  .nav-links { display: none; }
+  .wrap { width: min(100% - 28px, 1120px); }
+  .hero { gap: 2rem; }
+
+  .quick-grid,
+  .skills-grid,
+  .spec-sheet {
+    grid-template-columns: 1fr;
+  }
+
+  .spec {
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .spec:last-child { border-bottom: 0; }
+
+  .role {
+    grid-template-columns: 1fr;
+    gap: 0.65rem;
+  }
+
+  .image-placeholder { min-height: 280px; }
+  section { padding: 4rem 0; }
+  footer { flex-direction: column; }
+}
+</style>
+<link rel="stylesheet" href="te-style.css">
+</head>
+<body>
+<nav>
+  <a href="#top" class="nav-name">Daniel<span>Morales</span></a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="resume.html">Resume</a></li>
+    <li><a href="projects.html">Projects</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+</nav>
+
+<main id="top">
+  <header class="hero wrap">
+    <div>
+      <p class="eyebrow">Mechanical Engineering Portfolio</p>
+      <h1>Daniel Morales</h1>
+      <p class="hero-copy">I am a mechanical engineering student at the University of Texas at El Paso with a minor in biomedical engineering. My work combines CAD, robotics, programming, rapid prototyping, and engineering computation.</p>
+      <div class="actions">
+        <a class="btn" href="#projects">Review Projects</a>
+        <a class="btn secondary" href="contact.html">Contact Me</a>
+        <a class="btn secondary" href="resume.html">Resume</a>
+      </div>
+    </div>
+
+    <aside class="hero-panel" aria-label="Engineering profile summary">
+      <div class="image-placeholder">
+        <img src="PDFS/Profile_Photo.jpeg" alt="Daniel Morales profile photo">
+        <div class="placeholder-content">
+          <div>
+            <strong>Mechanical Engineering Project Work</strong>
+            <span>CAD modeling, robotics, rapid prototyping, programming, and engineering computation.</span>
+          </div>
+        </div>
+      </div>
+      <div class="spec-sheet">
+        <div class="spec"><strong>GPA</strong><span>3.62</span></div>
+        <div class="spec"><strong>CAD</strong><span>Fusion 360 / SolidWorks</span></div>
+        <div class="spec"><strong>Code</strong><span>Python / Java / MATLAB</span></div>
+      </div>
+    </aside>
+  </header>
+
+  <section class="wrap" aria-labelledby="snapshot-title">
+    <div class="section-head">
+      <div>
+        <p class="eyebrow">Employer Snapshot</p>
+        <h2 id="snapshot-title">What I bring</h2>
+      </div>
+      <p>My resume highlights project-based engineering experience across robotics, CAD modeling, programming, and data-focused mechanical analysis.</p>
+    </div>
+    <div class="quick-grid">
+      <div class="card fade"><p class="label">Education</p><strong>B.S. Mechanical Engineering, biomedical engineering minor</strong></div>
+      <div class="card fade"><p class="label">Coursework</p><strong>Mechanics of Materials, Dynamics, Differential Equations, Thermo-fluids</strong></div>
+      <div class="card fade"><p class="label">Build Work</p><strong>Robotics, drone components, solar irrigation, and rapid prototyping</strong></div>
+      <div class="card fade"><p class="label">Ready For</p><strong>Mechanical engineering internships and project roles</strong></div>
+    </div>
+  </section>
+
+  <section id="projects" class="wrap" aria-labelledby="projects-title">
+    <div class="section-head">
+      <div>
+        <p class="eyebrow">Selected Work</p>
+        <h2 id="projects-title">Projects with engineering evidence</h2>
+      </div>
+      <p>These projects come from my resume and show work across robotics, CAD, programming, team leadership, and engineering computation.</p>
+    </div>
+
+    <div class="project-grid">
+      <a class="project fade" href="Project pages/vex-robotics.html" style="--project-image: url('PDFS/Vex-Robotics/Vex-Robotics_CardTitle.jpg');" aria-label="Open detailed page for Vex Robotics">
+        <p class="label">Vex Robotics | Aug. 2021 - Feb. 2024</p>
+        <h3>Vex-Robotics Competition: Over Under</h3>
+        <p>Designed and assembled modular robot components for competition use, focusing on match functionality, serviceability, and quick iteration.</p>
+        <div class="tags">
+          <span class="tag">Fusion 360</span>
+          <span class="tag">Robot Design</span>
+          <span class="tag">Assembly</span>
+          <span class="tag">Competition</span>
+        </div>
+        <ul class="metric-list">
+          <li>Designed and assembled modular robot components using Fusion 360.</li>
+          <li>Contributed to iterative design improvements for competition performance.</li>
+          <li>Built practical CAD and assembly judgment through hands-on robot work.</li>
+        </ul>
+      </a>
+
+      <a class="project fade" href="Project pages/greenhouse-project.html" style="--project-image: url('PDFS/Greenhouse-Project/Greenhouse_Project_CardTitle.jpeg');" aria-label="Open detailed page for Greenhouse Project">
+        <p class="label">Project Manager | Aug. 2023 - May 2024</p>
+        <h3>Greenhouse Project</h3>
+        <p>Led a 5-member team maintaining a solar-powered irrigation system with plant-growth scheduling.</p>
+        <div class="tags">
+          <span class="tag">Project Management</span>
+          <span class="tag">Solar Power</span>
+          <span class="tag">Irrigation</span>
+          <span class="tag">Team Lead</span>
+        </div>
+        <ul class="metric-list">
+          <li>Coordinated scheduling, task delegation, and system implementation.</li>
+          <li>Improved plant growth efficiency through automated watering schedules.</li>
+          <li>Developed leadership, planning, and technical coordination skills.</li>
+        </ul>
+      </a>
+
+      <a class="project fade" href="Project pages/bell-advanced-vertical-robotics.html" style="--project-image: url('PDFS/Bell_Advanced_Vertical_Robotics/Bell_Advanced_Vertical_Robotics_CardTitle.jpeg');" aria-label="Open detailed page for Bell Advanced Vertical Robotics">
+        <p class="label">Programmer + Assembly Assistant | Aug. 2022 - Dec. 2022</p>
+        <h3>Bell Advanced Vertical Robotics</h3>
+        <p>Calibrated and programmed a quadcopter drone for flight response, visual output, and laser output based on computer input.</p>
+        <div class="tags">
+          <span class="tag">Drone</span>
+          <span class="tag">Programming</span>
+          <span class="tag">CAD</span>
+          <span class="tag">3D Printing</span>
+        </div>
+        <ul class="metric-list">
+          <li>Applied CAD models and 3D printing to produce functional drone components.</li>
+          <li>Supported drone assembly while tuning programmed outputs and response behavior.</li>
+          <li>Connected mechanical design work with embedded system performance requirements.</li>
+        </ul>
+      </a>
+
+      <a class="project fade" href="Project pages/poke-miner-rpg.html" style="--project-image: url('PDFS/Poke-miner/Poke-minerRPG_Card_Title.png');" aria-label="Open detailed page for Poke-miner RPG">
+        <p class="label">Individual Project | Mar. 2025 - Apr. 2025</p>
+        <h3>Poke-miner RPG</h3>
+        <p>Created a Java role-playing game where users catch and train Pokemon-style creatures and battle trainers to progress.</p>
+        <div class="tags">
+          <span class="tag">Java</span>
+          <span class="tag">OOP</span>
+          <span class="tag">Arrays</span>
+          <span class="tag">Game Logic</span>
+        </div>
+        <ul class="metric-list">
+          <li>Designed and developed a Java-based RPG using object-oriented programming principles.</li>
+          <li>Implemented arrays of objects, constructors, and class-based game logic.</li>
+          <li>Built interactive gameplay involving character progression and battles.</li>
+        </ul>
+      </a>
+
+      <a class="project fade" href="Project pages/others.html" aria-label="Open detailed page for other projects">
+        <p class="label">Additional Work</p>
+        <h3>Others</h3>
+        <p>A flexible place for smaller projects, experiments, coursework, prototypes, and additional engineering or programming work.</p>
+        <div class="tags">
+          <span class="tag">Projects</span>
+          <span class="tag">Coursework</span>
+          <span class="tag">Prototypes</span>
+          <span class="tag">Documentation</span>
+        </div>
+        <ul class="metric-list">
+          <li>Collects smaller work that does not need a full dedicated category yet.</li>
+          <li>Leaves room for future images, notes, and technical evidence.</li>
+        </ul>
+      </a>
+    </div>
+  </section>
+
+  <section id="skills" class="wrap" aria-labelledby="skills-title">
+    <div class="section-head">
+      <div>
+        <p class="eyebrow">Technical Toolkit</p>
+        <h2 id="skills-title">Skills employers can verify</h2>
+      </div>
+      <p>These are the software and engineering skills listed on my resume, organized around how I use them in projects.</p>
+    </div>
+
+    <div class="skills-grid">
+      <div class="skill-card fade"><p class="label">CAD</p><h3>3D Modeling</h3><p>Fusion 360 and SolidWorks for robot components, drone parts, and mechanical project work.</p></div>
+      <div class="skill-card fade"><p class="label">Programming</p><h3>Python, Java, MATLAB</h3><p>Object-oriented programming, engineering computation, plotting, and interactive program logic.</p></div>
+      <div class="skill-card fade"><p class="label">Engineering</p><h3>Mechanical Fundamentals</h3><p>Mechanics of materials, dynamics, thermo-fluids, design fundamentals, and differential equations.</p></div>
+      <div class="skill-card fade"><p class="label">Prototyping</p><h3>Rapid Prototyping + 3D Printing</h3><p>CAD models, 3D-printed parts, and hands-on assembly for functional robotics and drone components.</p></div>
+      <div class="skill-card fade"><p class="label">Leadership</p><h3>Team Coordination</h3><p>Project management, task delegation, mentoring, and collaboration across student engineering teams.</p></div>
+      <div class="skill-card fade"><p class="label">Computation</p><h3>Data + Plots</h3><p>Array-based data processing and Matplotlib visualization for stress-strain material behavior.</p></div>
+    </div>
+  </section>
+
+  <section id="experience" class="wrap" aria-labelledby="experience-title">
+    <div class="section-head">
+      <div>
+        <p class="eyebrow">Activities</p>
+        <h2 id="experience-title">Leadership and extracurriculars</h2>
+      </div>
+      <p>My resume includes leadership and service activities tied to robotics, CAD mentoring, team continuity, and community involvement.</p>
+    </div>
+
+    <div class="timeline">
+      <article class="role fade">
+        <time>Aug. 2021 - May 2024</time>
+        <div>
+          <h3>Robotics Vice President</h3>
+          <p class="company">Ysleta High School - El Paso, Texas</p>
+          <ul>
+            <li>Mentored new robotics team members in CAD design and assembly.</li>
+            <li>Helped build 3 competition robots, including 1 that placed top 5 at a State Qualifier.</li>
+            <li>Supported team continuity through design knowledge sharing and hands-on build work.</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="role fade">
+        <time>Jan. 2022 - May 2024</time>
+        <div>
+          <h3>National Honor Society Member</h3>
+          <p class="company">Ysleta High School - El Paso, Texas</p>
+          <ul>
+            <li>Contributed to multiple projects in the local community.</li>
+            <li>Brought input from the local community to a publicly owned park project.</li>
+            <li>Developed service, communication, and community-focused collaboration experience.</li>
+          </ul>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section id="about" class="wrap" aria-labelledby="about-title">
+    <div class="section-head">
+      <div>
+        <p class="eyebrow">Credentials</p>
+        <h2 id="about-title">Education and background</h2>
+      </div>
+      <p>My education combines current university mechanical engineering study with early-college engineering preparation and an associate degree.</p>
+    </div>
+
+    <div class="about-layout">
+      <div class="about-copy">
+        <p>I approach mechanical engineering through a mix of coursework, CAD modeling, programming, and hands-on project work. My resume shows experience with robot components, drone calibration, solar irrigation, Java game logic, and Python stress-strain analysis.</p>
+        <p>I am especially interested in practical engineering problems where design, computation, and physical implementation come together.</p>
+      </div>
+
+      <aside class="credential-box">
+        <h3>Profile Details</h3>
+        <dl>
+          <div><dt>Degree</dt><dd>B.S. Mechanical Engineering, Minor in Biomedical Engineering</dd></div>
+          <div><dt>School</dt><dd>University of Texas at El Paso</dd></div>
+          <div><dt>Status</dt><dd>Aug. 2024 - Ongoing</dd></div>
+          <div><dt>GPA</dt><dd>3.62</dd></div>
+          <div><dt>Additional Education</dt><dd>A.A. Multidisciplinary Studies, El Paso Community College</dd></div>
+          <div><dt>Role Target</dt><dd>Mechanical engineering internships and project-based engineering roles</dd></div>
+        </dl>
+      </aside>
+    </div>
+  </section>
+
+  <section id="contact" class="wrap" aria-labelledby="contact-title">
+    <div class="contact-panel">
+      <div>
+        <p class="eyebrow" style="color: rgba(255,255,255,0.72);">Contact</p>
+        <h2 id="contact-title">Ready to discuss engineering roles.</h2>
+        <p>Use the links here for my resume, email, LinkedIn profile, Handshake profile, and project information.</p>
+      </div>
+      <div class="contact-links">
+        <a href="mailto:djmorales2@miners.utep.edu">djmorales2@miners.utep.edu</a>
+        <a href="https://www.linkedin.com/in/daniel-morales-557644304">LinkedIn Profile</a>
+        <a href="https://utep.joinhandshake.com/profiles/d_morales">Handshake Profile</a>
+        <a href="resume.html">Resume Page</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <span>Daniel Morales | Mechanical Engineering Portfolio</span>
+  <span>Last updated 2026</span>
+</footer>
+
+<script>
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((entry) => {
+    if (entry.isIntersecting) entry.target.classList.add("in");
+  });
+}, { threshold: 0.08 });
+
+document.querySelectorAll(".fade").forEach((element) => observer.observe(element));
+</script>
+</body>
+</html>

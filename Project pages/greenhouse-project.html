@@ -1,0 +1,168 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Daniel Morales | Greenhouse Project</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+:root { --bg: #f7f8f5; --ink: #171a1c; --muted: #667076; --line: #d8ded5; --green: #1d5f52; --steel: #44546a; --panel: #fff; --shadow: 0 24px 60px rgba(24,33,38,0.13); }
+body { min-height: 100vh; font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: linear-gradient(90deg, rgba(216,222,213,0.45) 1px, transparent 1px), linear-gradient(rgba(216,222,213,0.42) 1px, transparent 1px), var(--bg); background-size: 44px 44px; color: var(--ink); line-height: 1.6; }
+nav { position: fixed; top: 0; left: 0; right: 0; z-index: 20; height: 64px; display: flex; align-items: center; justify-content: space-between; padding: 0 5vw; background: rgba(247,248,245,0.9); border-bottom: 1px solid var(--line); backdrop-filter: blur(14px); }
+nav a { color: var(--ink); font-weight: 800; text-decoration: none; }
+.nav-name span { color: var(--green); }
+.nav-links { display: flex; gap: 1.25rem; list-style: none; }
+.nav-links a { color: var(--muted); font-size: 0.82rem; font-weight: 700; }
+.wrap { width: min(1120px, calc(100% - 40px)); margin: 0 auto; }
+.eyebrow { color: var(--green); font-size: 0.78rem; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 0.75rem; }
+h1 { font-size: clamp(2.6rem, 5vw, 4.8rem); line-height: 0.98; margin-bottom: 1.1rem; letter-spacing: 0; }
+.case-hero { min-height: 520px; display: grid; align-items: end; padding: 9.5rem 0 4rem; background: linear-gradient(180deg, rgba(17,17,17,0.16), rgba(17,17,17,0.64)), var(--hero-image, linear-gradient(135deg, #d8ded5, #f8faf7)); background-size: cover; background-position: center; border-bottom: 1px solid var(--line); }
+.case-hero h1 { max-width: 900px; color: #fff; font-size: clamp(3rem, 8vw, 7rem) !important; line-height: 0.9 !important; text-transform: uppercase; text-shadow: 0 18px 45px rgba(0,0,0,0.45); }
+.case-hero .eyebrow { color: #fff !important; text-shadow: 0 8px 22px rgba(0,0,0,0.45); }
+.case-hero p:not(.eyebrow) { max-width: 640px; color: rgba(255,255,255,0.92); font-size: clamp(1rem, 1.6vw, 1.18rem); font-weight: 700; }
+.overview { display: grid; grid-template-columns: 1.2fr repeat(3, 0.75fr); margin: 1.25rem auto; border: 1px solid var(--line); background: rgba(255,254,248,0.94); }
+.overview p { padding: 1rem; color: var(--steel); border-right: 1px solid var(--line); }
+.overview p:last-child { border-right: 0; }
+.overview span { display: block; color: var(--muted); font-size: 0.72rem; font-weight: 800; text-transform: uppercase; margin-bottom: 0.25rem; }
+.overview strong { color: var(--ink); }
+.case-body { display: grid; gap: 1.2rem; margin: 1.6rem auto 5rem; }
+.story-row { display: grid; grid-template-columns: minmax(0, 0.88fr) minmax(360px, 1.12fr); gap: 1.2rem; align-items: stretch; }
+.story-row.reverse { grid-template-columns: minmax(360px, 1.08fr) minmax(0, 0.92fr); }
+.story-panel { border: 1px solid var(--line); background: rgba(255,254,248,0.92); padding: clamp(1.25rem, 3vw, 2.3rem); display: grid; align-content: center; }
+.story-panel h2 { font-size: clamp(1.8rem, 3.5vw, 3.1rem) !important; line-height: 0.95 !important; margin-bottom: 1rem; }
+.story-panel p { color: var(--steel); font-size: clamp(1rem, 1.4vw, 1.16rem); max-width: 620px; }
+.story-panel ul { display: grid; gap: 0.65rem; color: var(--steel); padding-left: 1.15rem; }
+.media-slot { min-height: 340px; border: 1px solid var(--line); background: linear-gradient(90deg, rgba(17,17,17,0.12) 1px, transparent 1px), linear-gradient(rgba(17,17,17,0.12) 1px, transparent 1px), #fffef8; background-size: 28px 28px; display: grid; place-items: center; padding: 1.2rem; color: var(--muted); text-align: center; }
+.media-slot.feature { background: linear-gradient(135deg, rgba(17,17,17,0.18), rgba(29,95,82,0.14)), var(--hero-image, #fffef8); background-size: cover; background-position: center; color: #fff; }
+.media-slot.photo { background: var(--slot-image); background-size: cover; background-position: center; }
+.media-slot[data-full-image] { cursor: zoom-in; position: relative; }
+.media-slot[data-full-image]::after { content: "view"; position: absolute; right: 0.85rem; bottom: 0.85rem; padding: 0.35rem 0.55rem; border: 1px solid var(--ink); background: rgba(255,254,248,0.94); color: var(--ink); font-size: 0.72rem; font-weight: 800; opacity: 0; transform: translateY(4px); transition: opacity 160ms ease, transform 160ms ease; }
+.media-slot[data-full-image]:hover::after,
+.media-slot[data-full-image]:focus-visible::after { opacity: 1; transform: translateY(0); }
+.media-slot[data-full-image]:focus-visible { outline: 3px solid var(--green); outline-offset: 3px; }
+.media-slot img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.media-slot strong { display: block; color: inherit; font-size: 1.05rem; margin-bottom: 0.25rem; }
+.media-slot span { display: block; font-size: 0.84rem; }
+.gallery { border: 1px solid var(--line); background: rgba(255,254,248,0.92); padding: 1.1rem; }
+.gallery h2 { font-size: clamp(1.55rem, 3vw, 2.5rem) !important; margin-bottom: 1rem; }
+.gallery-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+.gallery .media-slot { min-height: 220px; }
+.image-lightbox { position: fixed; inset: 0; z-index: 100; display: none; align-items: center; justify-content: center; padding: clamp(1rem, 4vw, 3rem); background: rgba(17,17,17,0.84); }
+.image-lightbox.is-open { display: flex; }
+.image-lightbox img { max-width: min(100%, 1180px); max-height: 86vh; object-fit: contain; background: #fffef8; border: 1px solid #fffef8; box-shadow: 0 24px 70px rgba(0,0,0,0.42); }
+.lightbox-close { position: fixed; top: 1rem; right: 1rem; width: 2.7rem; height: 2.7rem; border: 1px solid var(--ink); background: #fffef8; color: var(--ink); font-size: 1.5rem; line-height: 1; cursor: pointer; }
+.lightbox-close:hover,
+.lightbox-close:focus-visible { background: var(--green); color: #fff; outline: none; }
+@media (max-width: 820px) { nav { padding: 0 20px; } .nav-links { display: none; } .wrap { width: min(100% - 28px, 1120px) !important; } .case-hero { min-height: 430px; padding: 7rem 0 2.5rem; } .overview, .story-row, .story-row.reverse, .gallery-grid { grid-template-columns: 1fr; } .overview p { border-right: 0; border-bottom: 1px solid var(--line); } .overview p:last-child { border-bottom: 0; } .story-row.reverse .media-slot { order: 2; } .media-slot { min-height: 260px; } }
+</style>
+<link rel="stylesheet" href="../te-style.css">
+</head>
+<body>
+<nav>
+  <a href="../index.html" class="nav-name">Daniel<span>Morales</span></a>
+  <ul class="nav-links">
+    <li><a href="../index.html">Home</a></li>
+    <li><a href="../resume.html">Resume</a></li>
+    <li><a href="../projects.html">Projects</a></li>
+    <li><a href="../about.html">About</a></li>
+    <li><a href="../contact.html">Contact</a></li>
+  </ul>
+</nav>
+<main>
+  <section class="case-hero" style="--hero-image: url('../PDFS/Greenhouse-Project/Greenhouse_Project_CardTitle.jpeg');" aria-label="Greenhouse Project title image">
+    <div class="wrap">
+      <p class="eyebrow">Project Manager | Aug. 2023 - May 2024</p>
+      <h1>Greenhouse Project</h1>
+      <p>Solar-powered irrigation, team coordination, and practical system maintenance for a student greenhouse project.</p>
+    </div>
+  </section>
+
+  <section class="wrap overview" aria-label="Greenhouse project overview">
+    <p><span>Focus</span><strong>Automated irrigation and greenhouse maintenance</strong></p>
+    <p><span>Role</span><strong>Project manager</strong></p>
+    <p><span>Team</span><strong>5 members</strong></p>
+    <p><span>Tools</span><strong>Solar power, scheduling, system testing</strong></p>
+  </section>
+
+  <section class="wrap case-body">
+    <div class="story-row">
+      <article class="story-panel">
+        <p class="eyebrow">Project Summary</p>
+        <h2>Introducing Autonomy</h2>
+        <p>Our projects intent was to maintain a artificially stable environment for plants to survive. We wanted to introduce autonomy by installing automatic watering systems, and sustainablity using power provided by solar panels. I was in charge of overseeing the different sub projects and maintaining plant life.</p>
+      </article>
+      <div class="media-slot feature" style="--hero-image: url('../PDFS/Greenhouse-Project/Greenhouse_Project_CardTitle.jpeg');" data-full-image="../PDFS/Greenhouse-Project/Greenhouse_Project_CardTitle.jpeg" role="button" tabindex="0" aria-label="View full Greenhouse Project title image">
+      </div>
+    </div>
+
+    <div class="story-row reverse">
+      <div class="media-slot photo" style="--slot-image: url('../PDFS/Greenhouse-Project/Greenhouse1.jpeg');" data-full-image="../PDFS/Greenhouse-Project/Greenhouse1.jpeg" role="button" tabindex="0" aria-label="View full Greenhouse project photo">
+      </div>
+      <article class="story-panel">
+        <p class="eyebrow">Engineering Evidence</p>
+        <h2>Subprojects</h2>
+        <ul>
+          <li>Providing power to the greenhouse via solar panels</li>
+          <li>Implementing hydroponics in order to introduce more plant life, including lettuce</li>
+          <li>Doing preparations to introduce a self sustaining ecosystem</li>
+          <li>Maintaing proper air flow to prevent mold buildup</li>
+        </ul>
+      </article>
+    </div>
+
+    <section class="gallery" aria-label="Greenhouse project image placeholders">
+      <h2>Project images</h2>
+      <div class="gallery-grid">
+        <div class="media-slot photo" style="--slot-image: url('../PDFS/Greenhouse-Project/Greenhouse1.jpeg');" data-full-image="../PDFS/Greenhouse-Project/Greenhouse1.jpeg" role="button" tabindex="0" aria-label="View full Greenhouse project photo">
+        </div>
+        <div class="media-slot photo" style="--slot-image: url('../PDFS/Greenhouse-Project/Greenhouse2.jpeg');" data-full-image="../PDFS/Greenhouse-Project/Greenhouse2.jpeg" role="button" tabindex="0" aria-label="View full Greenhouse project photo">
+        </div>
+        <div class="media-slot photo" style="--slot-image: url('../PDFS/Greenhouse-Project/Greenhouse3.jpeg');" data-full-image="../PDFS/Greenhouse-Project/Greenhouse3.jpeg" role="button" tabindex="0" aria-label="View full Greenhouse project photo">
+        </div>
+      </div>
+    </section>
+  </section>
+</main>
+<div class="image-lightbox" id="imageLightbox" aria-hidden="true">
+  <button class="lightbox-close" type="button" aria-label="Close full image">&times;</button>
+  <img src="" alt="">
+</div>
+<script>
+const lightbox = document.querySelector("#imageLightbox");
+const lightboxImage = lightbox.querySelector("img");
+const closeLightbox = lightbox.querySelector(".lightbox-close");
+
+function openImageLightbox(trigger) {
+  lightboxImage.src = trigger.dataset.fullImage;
+  lightboxImage.alt = trigger.getAttribute("aria-label") || "Full project image";
+  lightbox.classList.add("is-open");
+  lightbox.setAttribute("aria-hidden", "false");
+  closeLightbox.focus();
+}
+
+function hideImageLightbox() {
+  lightbox.classList.remove("is-open");
+  lightbox.setAttribute("aria-hidden", "true");
+  lightboxImage.src = "";
+}
+
+document.querySelectorAll("[data-full-image]").forEach((trigger) => {
+  trigger.addEventListener("click", () => openImageLightbox(trigger));
+  trigger.addEventListener("keydown", (event) => {
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+      openImageLightbox(trigger);
+    }
+  });
+});
+
+closeLightbox.addEventListener("click", hideImageLightbox);
+lightbox.addEventListener("click", (event) => {
+  if (event.target === lightbox) hideImageLightbox();
+});
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape" && lightbox.classList.contains("is-open")) hideImageLightbox();
+});
+</script>
+</body>
+</html>
