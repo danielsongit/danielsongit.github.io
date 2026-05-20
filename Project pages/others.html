@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -34,8 +34,14 @@ h1 { font-size: clamp(2.6rem, 5vw, 4.8rem); line-height: 0.98; margin-bottom: 1r
 .image-lightbox { position: fixed; inset: 0; z-index: 100; display: none; align-items: center; justify-content: center; padding: clamp(1rem, 4vw, 3rem); background: rgba(17,17,17,0.84); }
 .image-lightbox.is-open { display: flex; }
 .lightbox-content { width: min(1180px, 100%); height: min(88vh, 720px); display: grid; grid-template-columns: minmax(0, 2fr) minmax(300px, 1fr); align-items: stretch; background: #fffef8; border: 1px solid #fffef8; box-shadow: 0 24px 70px rgba(0,0,0,0.42); overflow: hidden; }
+.lightbox-content.no-image { width: min(680px, 100%); height: auto; display: block; }
 .lightbox-content img { width: 100%; height: 100%; object-fit: cover; background: #f2f1ec; }
+.lightbox-content.no-image img { display: none; }
+.lightbox-gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 0.5rem; background: #f2f1ec; overflow: auto; }
+.lightbox-gallery img { min-height: 100%; }
+.lightbox-gallery.is-hidden { display: none; }
 .lightbox-summary { height: 100%; padding: clamp(1rem, 3vw, 1.6rem); border-left: 1px solid var(--line); color: var(--ink); overflow: auto; }
+.lightbox-content.no-image .lightbox-summary { border-left: 0; }
 .lightbox-summary h2 { font-size: clamp(1.5rem, 2.6vw, 2.25rem) !important; line-height: 0.98 !important; margin-bottom: 0.85rem; }
 .lightbox-summary p { color: var(--steel); }
 .lightbox-close { position: fixed; top: 1rem; right: 1rem; width: 2.7rem; height: 2.7rem; border: 1px solid var(--ink); background: #fffef8; color: var(--ink); font-size: 1.5rem; line-height: 1; cursor: pointer; }
@@ -83,6 +89,14 @@ h1 { font-size: clamp(2.6rem, 5vw, 4.8rem); line-height: 0.98; margin-bottom: 1r
         <h2>3 Point Bend Test</h2>
         <p>Mechanical testing setup and documentation.</p>
       </article>
+      <article class="gallery-card" tabindex="0" role="button" style="--project-image: url('../PDFS/Others/Modeling_Pipe_Flow_ANSYS_Velocity_Contour.png');" data-full-image="../PDFS/Others/Modeling_Pipe_Flow_ANSYS_Velocity_Contour.png" data-title="Modeling Pipe Flow on ANSYS" data-summary="A fluid simulation project focused on modeling pipe flow in ANSYS, using velocity contours to study flow behavior, setup conditions, and engineering results." aria-label="View Modeling Pipe Flow on ANSYS image">
+        <h2>Modeling Pipe Flow on ANSYS</h2>
+        <p>CFD modeling and flow behavior analysis.</p>
+      </article>
+      <article class="gallery-card" tabindex="0" role="button" style="--project-image: url('../PDFS/Others/D_Shackle_Test_Setup.jpeg');" data-full-image="../PDFS/Others/D_Shackle_Test_Setup.jpeg" data-gallery-images="../PDFS/Others/D_Shackle_Test_Setup.jpeg|../PDFS/Others/D_Shackle_Test_Parts.jpeg" data-title="D Shackle Test" data-summary="A mechanical testing project centered on evaluating a D shackle under load and documenting the setup, behavior, and results from the test." aria-label="View D Shackle Test project images">
+        <h2>D Shackle Test</h2>
+        <p>Load testing and mechanical behavior documentation.</p>
+      </article>
     </div>
   </section>
 </main>
@@ -90,6 +104,7 @@ h1 { font-size: clamp(2.6rem, 5vw, 4.8rem); line-height: 0.98; margin-bottom: 1r
   <button class="lightbox-close" type="button" aria-label="Close full image">&times;</button>
   <div class="lightbox-content">
     <img src="" alt="">
+    <div class="lightbox-gallery is-hidden" aria-label="Project image gallery"></div>
     <aside class="lightbox-summary">
       <p class="eyebrow">Quick Summary</p>
       <h2></h2>
@@ -100,12 +115,27 @@ h1 { font-size: clamp(2.6rem, 5vw, 4.8rem); line-height: 0.98; margin-bottom: 1r
 <script>
 const lightbox = document.querySelector("#imageLightbox");
 const lightboxImage = lightbox.querySelector("img");
+const lightboxGallery = lightbox.querySelector(".lightbox-gallery");
 const lightboxTitle = lightbox.querySelector(".lightbox-summary h2");
 const lightboxSummary = lightbox.querySelector(".lightbox-summary p:last-child");
 const closeLightbox = lightbox.querySelector(".lightbox-close");
 
 function openProjectDetail(card) {
-  lightboxImage.src = card.dataset.fullImage;
+  const fullImage = card.dataset.fullImage;
+  const galleryImages = card.dataset.galleryImages ? card.dataset.galleryImages.split("|") : [];
+  lightbox.querySelector(".lightbox-content").classList.toggle("no-image", !fullImage);
+  lightboxGallery.innerHTML = "";
+  lightboxGallery.classList.toggle("is-hidden", galleryImages.length < 2);
+  lightboxImage.style.display = galleryImages.length > 1 ? "none" : "";
+  if (galleryImages.length > 1) {
+    galleryImages.forEach((imageSrc, index) => {
+      const image = document.createElement("img");
+      image.src = imageSrc;
+      image.alt = `${card.dataset.title} image ${index + 1}`;
+      lightboxGallery.appendChild(image);
+    });
+  }
+  lightboxImage.src = galleryImages.length > 1 ? "" : fullImage || "";
   lightboxImage.alt = card.getAttribute("aria-label") || "Full project image";
   lightboxTitle.textContent = card.dataset.title;
   lightboxSummary.textContent = card.dataset.summary;
@@ -118,6 +148,10 @@ function hideProjectDetail() {
   lightbox.classList.remove("is-open");
   lightbox.setAttribute("aria-hidden", "true");
   lightboxImage.src = "";
+  lightboxImage.style.display = "";
+  lightboxGallery.innerHTML = "";
+  lightboxGallery.classList.add("is-hidden");
+  lightbox.querySelector(".lightbox-content").classList.remove("no-image");
 }
 
 document.querySelectorAll(".gallery-card").forEach((card) => {
