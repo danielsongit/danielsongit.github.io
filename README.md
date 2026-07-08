@@ -1,5 +1,1 @@
-# Mechanical Engineering Portfolio
-
-Static portfolio site ready for GitHub Pages.
-
-## Publish on GitHub Pages
+# This is my portfolio where i show my work to people :D
